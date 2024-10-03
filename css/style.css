@@ -1,3 +1,23 @@
 h1 {
 	font-size: 75px;
+	font-family: sans-serif;
+	margin-left: 50%;
+	transform: translate(-5%, 0);
+}
+body {
+	display: flex;
+	justify-content: center;
+}
+div {
+	width: 30vw;
+	height: 50vh;
+	background-color: aliceblue;
+	border-radius: 25px;
+}
+button {
+	margin-left: 50%;
+	transform: translate(-5%, 0);
+	border: none;
+	background-color: green;
+	padding: 15px;
 }
