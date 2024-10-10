@@ -1,0 +1,46 @@
+* {
+	font-family: sans-serif;
+}
+.button {
+	border: none;
+	border-radius: 25px;
+	padding: 15px 20px;
+	margin-left: 100px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+.button:active {
+	opacity: 0.7;
+}
+.inputColor {
+	display: block;
+	margin-top: 30px;
+	margin-left: 200px;
+	width: 100px;
+	height: 30px;
+}
+.InputButton {
+	border: none;
+	border-radius: 25px;
+	padding: 15px 20px;
+	margin-left: 190px;
+	margin-top: 10px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	display: block;
+}
+.buttonDiv {
+	border: none;
+	border-radius: 25px;
+	padding: 5px 20px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+.inputDiv {
+	border-radius: 10px;
+	margin-left: 10px;
+	margin-right: 5px;
+}
+.p {
+	margin-left: 10px;
+}
