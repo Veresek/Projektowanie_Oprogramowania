@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<body>
+    <h1 class="title">Zgadnij Stolicę!</h1>
+    <div class="score">
+        <p class="points">Punktacja</p>
+        <p id="correct" class="correct">Poprawne: <strong>0</strong></p>
+        <p id="incorrect" class="incorrect">Niepoprawne: <strong>0</strong></p>
+    </div>
+    <div class="history" id="history">
+        <p class="points">Historia</p>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+            <div id="myDropdown" class="dropdown-content">
+                <div>Link 1</div>
+                <div>Link 2</div>
+                <div>Link 3</div>
+            </div>
+        </div>
+    </div>
+    <div class="randomNation" id="randomNation">
+        <div class="inp">
+            <input type="text" id="capitalInp">
+            <button id="ansBtn">Sprawdź</button>
+        </div>
+    </div>
+    <div class="end" id="end">
+        <h1 class="endH1">Koniec gry</h1>
+    </div>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
