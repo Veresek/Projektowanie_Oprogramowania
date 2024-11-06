@@ -21,7 +21,7 @@ img {
 	border-radius: 25px;
 	display: block;
 	margin: auto;
-	margin-top: 100px;
+	margin-top: 80px;
 	width: 400px;
 	height: auto;
 	background-color: #555;
@@ -69,7 +69,16 @@ button {
 }
 .correct,
 .incorrect {
+	text-shadow: 0 0 4px black;
 	font-size: 18px;
+}
+.correct {
+	font-weight: bold;
+	color: rgb(0, 242, 0);
+}
+.incorrect {
+	font-weight: bold;
+	color: red;
 }
 .points {
 	font-weight: bold;
@@ -77,20 +86,26 @@ button {
 	font-size: 28px;
 }
 .end {
+	position: absolute;
 	border-radius: 20px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	position: absolute;
-	width: 400px;
-	background-color: #999;
+	width: 450px;
+	background-color: #222;
 	display: none;
-	min-height: 500px;
+	min-height: 600px;
+	box-shadow: 0 0 15px 20px #222;
+	animation: appear 1s;
 }
 .endH1 {
-	margin-top: 100px;
+	margin-top: 120px;
+	margin-bottom: 50px;
 	text-align: center;
-	font-size: 40px;
+	font-size: 50px;
+	color: red;
+	letter-spacing: 5px;
+	font-family: 'Rubik Wet Paint';
 }
 .end p {
 	margin-top: 10px;
@@ -112,44 +127,59 @@ button {
 	padding: 20px;
 	border-radius: 20px;
 }
-
-.dropbtn {
-	background-color: #3498db;
-	color: white;
-	padding: 16px;
-	font-size: 16px;
-	border: none;
-	cursor: pointer;
-	width: 80%;
+.ansBtn:hover {
+	background-color: #666;
 }
-.dropbtn:hover,
-.dropbtn:focus {
-	background-color: #2980b9;
+.ansBtn:active {
+	background-color: #777;
 }
-.dropdown {
-	position: relative;
-	display: inline-block;
-	width: 100%;
-	margin-left: 10%;
-	margin-top: 10px;
+strong {
+	color: #fff;
 }
-.dropdown-content {
-	display: none;
+p {
+	color: #fff;
+	text-shadow: 0 0 5px black;
+}
+.ansInfo {
 	position: absolute;
-	background-color: #f1f1f1;
-	min-width: 160px;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
+	text-align: center;
+	font-size: 20px;
+	padding: 15px;
+	border-radius: 15px;
+	animation: slideIn 2s forwards;
 }
-.dropdown-content div {
-	color: black;
-	padding: 12px 16px;
-	text-decoration: none;
-	display: block;
+.wrngAns {
+	border: red 2px solid;
+	box-shadow: 0 0 5px 5px red;
 }
-.dropdown-content a:hover {
-	background-color: #ddd;
+.corrAns {
+	border: green 2px solid;
+	box-shadow: 0 0 5px 5px green;
 }
-.show {
-	display: block;
+h3 {
+	color: #fff;
+	text-shadow: 0 0 5px black;
+}
+.gameButton {
+	background-color: rgb(56, 186, 229);
+	margin-top: 10px;
+	font-size: 15px;
+}
+@keyframes slideIn {
+	0% {
+		top: -100px;
+		left: 5%;
+	}
+	30% {
+		top: 100px;
+		left: 5%;
+	}
+	80% {
+		top: 100px;
+		left: 5%;
+	}
+	100% {
+		top: -150px;
+		left: 5%;
+	}
 }

@@ -10,20 +10,48 @@ let data;
 let country;
 let correct = 0;
 let incorrect = 0;
-let counterGames;
-let games = [
-	[
-		['link do flagi', 1],
-		['link do flagi 2', 0],
-	],
-	[
-		['link do flagi w grze 2', 1],
-		['link do flagi w grze 2', 0],
-	],
-];
+let gameHistory = [];
+let notificationQueue = [];
+let currentGame = { correct: 0, incorrect: 0, answers: [] };
+let isDisplaying = false;
 const name = document.createElement('p');
-name.classList.add('name');
 const img = document.createElement('img');
+
+function displayNotif(wl, country) {
+	const box = document.createElement('div');
+	const h3 = document.createElement('h3');
+	const p = document.createElement('p');
+	if (wl == 1) {
+		h3.innerHTML = 'Poprawna odpowiedź!';
+		p.innerHTML = `Dobrze odgadłeś solicę kraju: ${country.name.common}`;
+		box.classList.add('corrAns');
+	} else {
+		h3.innerHTML = 'Zła odpowiedź!';
+		p.innerHTML = `Poprawna stolica ${country.name.common} to: ${country.capital[0]}`;
+		box.classList.add('wrngAns');
+	}
+	box.appendChild(h3);
+	box.appendChild(p);
+	box.classList.add('ansInfo');
+	notificationQueue.push(box);
+	if (!isDisplaying) {
+		DisplayNext();
+	}
+}
+
+function DisplayNext() {
+	if (notificationQueue.length == 0) {
+		isDisplaying = false;
+		return;
+	}
+	isDisplaying = true;
+	const box = notificationQueue.shift();
+	document.body.appendChild(box);
+	box.addEventListener('animationend', () => {
+		document.body.removeChild(box);
+		DisplayNext();
+	});
+}
 async function getData() {
 	data = await fetch('https://restcountries.com/v3.1/region/europe');
 	data = await data.json();
@@ -31,87 +59,103 @@ async function getData() {
 }
 async function game() {
 	let countries = await getData();
+	name.classList.add('name');
 	country = countries[Math.floor(Math.random() * countries.length)];
 	img.setAttribute('src', country.flags.png);
 	name.innerHTML = country.name.common;
-
-	console.log(country);
+	console.log(country.capital[0]);
 	divNation.insertBefore(name, divNation.firstChild);
 	divNation.insertBefore(img, name);
-	correctP.innerHTML = `Poprawne: <strong>${correct}</strong>`;
-	incorrectP.innerHTML = `Nie poprawne: <strong>${incorrect}</strong>`;
+	correctP.innerHTML = `Poprawne: <strong>${currentGame.correct}</strong>`;
+	incorrectP.innerHTML = `Nie poprawne: <strong>${currentGame.incorrect}</strong>`;
 }
 game();
 ansBtn.addEventListener('click', () => {
-	if (capitalInp.value == country.capital[0]) {
-		correct++;
-		alert(`Podałeś poprawną stolicę ${country.name.common}`);
-		capitalInp.value = '';
-		game();
+	const answer = {
+		country: country.name.common,
+		correct: capitalInp.value === country.capital[0],
+	};
+	if (answer.correct) {
+		currentGame.correct++;
+		displayNotif(1, country);
 	} else {
-		alert(`Podałeś nie poprawną stolicę ${country.name.common}`);
-		incorrect++;
-		capitalInp.value = '';
-		game();
+		currentGame.incorrect++;
+		displayNotif(0, country);
 	}
-	if (incorrect >= 5) {
-		const correctScr = document.createElement('p');
-		const incorrectScr = document.createElement('p');
-		correctScr.innerHTML = `Poprawne: <strong>${correct}</strong>`;
-		incorrectScr.innerHTML = `Nie poprawne: <strong>${incorrect}</strong>`;
-		end.style.display = 'block';
-		end.appendChild(correctScr);
-		end.appendChild(incorrectScr);
-		again.innerHTML = 'Zagraj ponownie!';
-		again.classList.add('again');
-		end.appendChild(again);
-		again.addEventListener('click', () => {
-			correct = 0;
-			incorrect = 0;
-			end.style.display = 'none';
-			correctP.innerHTML = `Poprawne: <strong>${correct}</strong>`;
-			incorrectP.innerHTML = `Nie poprawne: <strong>${incorrect}</strong>`;
-		});
+	currentGame.answers.push(answer);
+	capitalInp.value = '';
+	game();
+	capitalInp.focus();
+	if (currentGame.incorrect >= 5) {
+		endGame();
 	}
 });
-function myFunction() {
-	document.getElementById('myDropdown').classList.toggle('show');
+
+function endGame() {
+	const correctScr = document.createElement('p');
+	const incorrectScr = document.createElement('p');
+	const endH1 = document.createElement('h1');
+	notificationQueue = [];
+	correctScr.innerHTML = `Poprawne: <strong>${currentGame.correct}</strong>`;
+	incorrectScr.innerHTML = `Nie poprawne: <strong>${currentGame.incorrect}</strong>`;
+	end.style.display = 'block';
+	end.innerHTML = '';
+	endH1.className = 'endH1';
+	endH1.innerText = 'Koniec gry';
+	end.appendChild(endH1);
+	end.appendChild(correctScr);
+	end.appendChild(incorrectScr);
+	again.innerHTML = 'Zagraj ponownie!';
+	again.classList.add('again');
+	end.appendChild(again);
+	gameHistory.push(currentGame);
+	updateHistory();
+	again.addEventListener('click', () => {
+		currentGame = { correct: 0, incorrect: 0, answers: [] };
+		end.style.display = 'none';
+		correctP.innerHTML = `Poprawne: <strong>${currentGame.correct}</strong>`;
+		incorrectP.innerHTML = `Nie poprawne: <strong>${currentGame.incorrect}</strong>`;
+	});
 }
 
-window.onclick = function (event) {
-	if (!event.target.matches('.dropbtn')) {
-		let dropdowns = document.getElementsByClassName('dropdown-content');
-		for (let i = 0; i < dropdowns.length; i++) {
-			let openDropdown = dropdowns[i];
-			if (openDropdown.classList.contains('show')) {
-				openDropdown.classList.remove('show');
-			}
-		}
-	}
-};
-
-function appendGame(arr) {
-	const div = document.createElement('div');
-	const button = document.createElement('button');
-	const dropdown = document.createElement('div');
-
-	button.textContent = `${counterGames} gra`;
-	div.classList.add('dropdown');
-	button.classList.add('dropbtn');
-	button.onclick = 'myFunction()';
-	div.appendChild(button);
-	history.appendChild(div);
-	div.appendChild(dropdown);
-	for (let i = 0; i < correct + incorrect; i++) {
-		const Dropdiv = document.createElement('div');
-		const dropP = document.createElement('p');
-		const Dropimg = document.createElement('img');
-		Dropdiv.classList.add('dropdown-content');
-		dropP.innerHTML = games[i][1];
-		Dropimg.src = country.flags.png;
-		div.appendChild(Dropdiv);
-		Dropdiv.appendChild(Dropimg);
-		Dropdiv.appendChild(DropP);
-	}
+function updateHistory() {
+	history.innerHTML = '<p class="points">Historia</p>';
+	gameHistory.forEach((game, index) => {
+		const gameButton = document.createElement('button');
+		gameButton.innerHTML = `Gra ${index + 1}: Poprawne: <strong>${
+			game.correct
+		}</strong>, Nie poprawne: <strong>${game.incorrect}</strong>`;
+		const details = document.createElement('div');
+		details.style.display = 'none';
+		details.innerHTML = '<h3>Szczegóły gry:</h3>';
+		game.answers.forEach(answer => {
+			const answerDetail = document.createElement('p');
+			answerDetail.innerHTML = `${answer.country}: ${
+				answer.correct ? 'Poprawne' : 'Nie poprawne'
+			}`;
+			answerDetail.style.color = answer.correct ? 'lightgreen' : 'red';
+			details.appendChild(answerDetail);
+		});
+		gameButton.addEventListener('click', () => {
+			details.style.display =
+				details.style.display === 'none' ? 'block' : 'none';
+		});
+		gameButton.classList.add('gameButton');
+		history.appendChild(gameButton);
+		history.appendChild(details);
+	});
 }
-appendGame(['gfdg', 'gdfgd']);
+
+function displayGameDetails(game) {
+	const details = document.createElement('div');
+	details.innerHTML = '<h3>Szczegóły gry:</h3>';
+	game.answers.forEach(answer => {
+		const answerDetail = document.createElement('p');
+		answerDetail.innerHTML = `${answer.country}: ${
+			answer.correct ? 'Poprawne' : 'Nie poprawne'
+		}`;
+		answerDetail.style.color = answer.correct ? 'lightgreen' : 'red';
+		details.appendChild(answerDetail);
+	});
+	history.appendChild(details);
+}
