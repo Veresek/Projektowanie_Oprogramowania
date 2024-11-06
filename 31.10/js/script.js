@@ -145,17 +145,3 @@ function updateHistory() {
 		history.appendChild(details);
 	});
 }
-
-function displayGameDetails(game) {
-	const details = document.createElement('div');
-	details.innerHTML = '<h3>Szczegóły gry:</h3>';
-	game.answers.forEach(answer => {
-		const answerDetail = document.createElement('p');
-		answerDetail.innerHTML = `${answer.country}: ${
-			answer.correct ? 'Poprawne' : 'Nie poprawne'
-		}`;
-		answerDetail.style.color = answer.correct ? 'lightgreen' : 'red';
-		details.appendChild(answerDetail);
-	});
-	history.appendChild(details);
-}
