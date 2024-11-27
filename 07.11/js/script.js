@@ -14,17 +14,18 @@ let incorrect = 0;
 let countires;
 let firstCountry;
 let secondCountry;
-let guessed;
+let win;
+let wrong;
 let clicked = 0;
 async function getData() {
 	let data = await fetch('https://restcountries.com/v3.1/region/europe');
 	countires = await data.json();
 	drawCountries(countires, 1);
 }
-function drawCountries(countries, wl) {
+function drawCountries(countries, win, wrong) {
 	let rfirstCountry;
 	let rsecondCountry;
-	if (wl == 1) {
+	if (win == 1) {
 		rfirstCountry = countries[Math.floor(Math.random() * countries.length)];
 		do {
 			rsecondCountry = countries[Math.floor(Math.random() * countries.length)];
@@ -32,12 +33,22 @@ function drawCountries(countries, wl) {
 		firstCountry = rfirstCountry;
 		secondCountry = rsecondCountry;
 	} else {
-		rfirstCountry = firstCountry;
-		do {
-			rsecondCountry = countries[Math.floor(Math.random() * countries.length)];
-		} while (rfirstCountry == rsecondCountry);
-		firstCountry = rfirstCountry;
-		secondCountry = rsecondCountry;
+		if (wrong == 'left') {
+			rsecondCountry = secondCountry;
+			do {
+				rfirstCountry = countries[Math.floor(Math.random() * countries.length)];
+			} while (rfirstCountry == rsecondCountry);
+			firstCountry = rsecondCountry;
+			secondCountry = rfirstCountry;
+		} else {
+			rfirstCountry = firstCountry;
+			do {
+				rsecondCountry =
+					countries[Math.floor(Math.random() * countries.length)];
+			} while (rfirstCountry == rsecondCountry);
+			firstCountry = rfirstCountry;
+			secondCountry = rsecondCountry;
+		}
 	}
 	displayData();
 }
@@ -64,19 +75,20 @@ fCountryDiv.addEventListener('click', () => {
 		if (firstCountry.population > secondCountry.population) {
 			correct++;
 			updateScore();
-			guessed = 1;
+			win = 1;
 			firstPop.style.display = 'block';
 			secPop.style.display = 'block';
 			fCountryDiv.style.backgroundColor = 'green';
 		} else if (firstCountry.population == secondCountry.population) {
-			guessed = 1;
+			win = 1;
 			firstPop.style.display = 'block';
 			secPop.style.display = 'block';
 			fCountryDiv.style.backgroundColor = 'yellow';
 			sCountryDiv.style.backgroundColor = 'yellow';
 		} else if (firstCountry.population < secondCountry.population) {
-			guessed = 0;
+			win = 0;
 			incorrect++;
+			wrong = 'right';
 			updateScore();
 			firstPop.style.display = 'block';
 			secPop.style.display = 'block';
@@ -89,7 +101,8 @@ fCountryDiv.addEventListener('click', () => {
 sCountryDiv.addEventListener('click', () => {
 	if (clicked == 0) {
 		if (firstCountry.population > secondCountry.population) {
-			guessed = 0;
+			win = 0;
+			wrong = 'left';
 			incorrect++;
 			updateScore();
 			firstPop.style.display = 'block';
@@ -97,13 +110,13 @@ sCountryDiv.addEventListener('click', () => {
 			fCountryDiv.style.backgroundColor = 'green';
 			sCountryDiv.style.backgroundColor = 'red';
 		} else if (firstCountry.population == secondCountry.population) {
-			guessed = 1;
+			win = 1;
 			firstPop.style.display = 'block';
 			secPop.style.display = 'block';
 			fCountryDiv.style.backgroundColor = 'yellow';
 			sCountryDiv.style.backgroundColor = 'yellow';
 		} else if (firstCountry.population < secondCountry.population) {
-			guessed = 1;
+			win = 1;
 			correct++;
 			updateScore();
 			firstPop.style.display = 'block';
@@ -119,7 +132,7 @@ next.addEventListener('click', () => {
 	secPop.style.display = 'none';
 	fCountryDiv.style.backgroundColor = '#555';
 	sCountryDiv.style.backgroundColor = '#555';
-	drawCountries(countires, guessed);
+	drawCountries(countires, win, wrong);
 });
 
 function updateScore() {
