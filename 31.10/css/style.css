@@ -3,13 +3,13 @@
 	padding: 0;
 }
 body {
-	font-family: 'Nunito', sans-serif;
 	background-color: #333;
+	font-family: 'Nunito', sans-serif;
 }
 .title {
-	text-align: center;
 	color: #fff;
 	font-size: 48px;
+	text-align: center;
 	margin-top: 100px;
 }
 img {
@@ -17,99 +17,99 @@ img {
 	height: 240px;
 }
 .randomNation {
-	padding: 20px;
-	border-radius: 25px;
 	display: block;
 	margin: auto;
-	margin-top: 80px;
+	padding: 20px;
 	width: 400px;
 	height: auto;
 	background-color: #555;
+	border-radius: 25px;
+	margin-top: 80px;
 }
 .name {
-	text-align: center;
-	font-size: 40px;
 	color: #fff;
 	background-color: #777;
+	font-size: 40px;
+	text-align: center;
 	border-radius: 10px;
 }
 .inp {
 	display: flex;
+	padding: 20px;
 	justify-content: center;
 	align-items: center;
 	gap: 15px;
-	padding: 20px;
 }
 input {
 	width: 500px;
 	height: 60px;
-	border-radius: 10px;
 	border: none;
-	text-align: center;
 	font-size: 20px;
+	border-radius: 10px;
+	text-align: center;
 }
 button {
 	padding: 15px 20px;
-	border: 2px solid white;
-	background: none;
-	border-radius: 10px;
 	color: #fff;
+	border: 2px solid white;
 	font-size: 23px;
 	cursor: pointer;
+	background: none;
+	border-radius: 10px;
 }
 .score {
 	position: absolute;
 	top: 10vh;
 	right: 6vw;
-	width: 300px;
 	display: inline-block;
-	background-color: #777;
 	padding: 20px;
+	width: 300px;
+	background-color: #777;
 	border-radius: 20px;
 }
 .correct,
 .incorrect {
-	text-shadow: 0 0 4px black;
 	font-size: 18px;
+	text-shadow: 0 0 4px black;
 }
 .correct {
-	font-weight: bold;
 	color: rgb(0, 242, 0);
+	font-weight: bold;
 }
 .incorrect {
-	font-weight: bold;
 	color: red;
+	font-weight: bold;
 }
 .points {
+	font-size: 28px;
 	font-weight: bold;
 	text-align: center;
-	font-size: 28px;
 }
 .end {
 	position: absolute;
-	border-radius: 20px;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	display: none;
 	width: 450px;
 	background-color: #222;
-	display: none;
+	border-radius: 20px;
+	transform: translate(-50%, -50%);
 	min-height: 600px;
 	box-shadow: 0 0 15px 20px #222;
 	animation: appear 1s;
 }
 .endH1 {
+	color: red;
+	font-size: 50px;
 	margin-top: 120px;
 	margin-bottom: 50px;
 	text-align: center;
-	font-size: 50px;
-	color: red;
 	letter-spacing: 5px;
 	font-family: 'Rubik Wet Paint';
 }
 .end p {
-	margin-top: 10px;
 	font-size: 30px;
+	margin-top: 10px;
 	text-align: center;
 }
 .again {
@@ -121,10 +121,10 @@ button {
 	position: absolute;
 	top: 25vh;
 	right: 6vw;
-	width: 300px;
 	display: inline-block;
-	background-color: #777;
 	padding: 20px;
+	width: 300px;
+	background-color: #777;
 	border-radius: 20px;
 }
 .ansBtn:hover {
@@ -142,9 +142,9 @@ p {
 }
 .ansInfo {
 	position: absolute;
-	text-align: center;
-	font-size: 20px;
 	padding: 15px;
+	font-size: 20px;
+	text-align: center;
 	border-radius: 15px;
 	animation: slideIn 2s forwards;
 }
@@ -162,8 +162,23 @@ h3 {
 }
 .gameButton {
 	background-color: rgb(56, 186, 229);
-	margin-top: 10px;
 	font-size: 15px;
+	margin-top: 10px;
+}
+.historyFlag {
+	width: 150px;
+	height: 75px;
+	display: inline-block;
+}
+.history i {
+	position: absolute;
+	top: 50%;
+	left: 70%;
+	translate: -50% -50%;
+	font-size: 60px;
+}
+.history p {
+	position: relative;
 }
 @keyframes slideIn {
 	0% {

@@ -8,8 +8,6 @@ const again = document.createElement('button');
 const history = document.getElementById('history');
 let data;
 let country;
-let correct = 0;
-let incorrect = 0;
 let gameHistory = [];
 let notificationQueue = [];
 let currentGame = { correct: 0, incorrect: 0, answers: [] };
@@ -68,11 +66,12 @@ async function game() {
 	divNation.insertBefore(img, name);
 	correctP.innerHTML = `Poprawne: <strong>${currentGame.correct}</strong>`;
 	incorrectP.innerHTML = `Nie poprawne: <strong>${currentGame.incorrect}</strong>`;
+	console.log(data);
 }
 game();
 ansBtn.addEventListener('click', () => {
 	const answer = {
-		country: country.name.common,
+		country: country.flags.png,
 		correct: capitalInp.value === country.capital[0],
 	};
 	if (answer.correct) {
@@ -130,8 +129,10 @@ function updateHistory() {
 		details.innerHTML = '<h3>Szczegóły gry:</h3>';
 		game.answers.forEach(answer => {
 			const answerDetail = document.createElement('p');
-			answerDetail.innerHTML = `${answer.country}: ${
-				answer.correct ? 'Poprawne' : 'Nie poprawne'
+			answerDetail.innerHTML = `<img src=${answer.country} class="historyFlag"></img>s ${
+				answer.correct
+					? '<i class="fa-solid fa-check"></i>'
+					: '<i class="fa-solid fa-x"></i>'
 			}`;
 			answerDetail.style.color = answer.correct ? 'lightgreen' : 'red';
 			details.appendChild(answerDetail);
