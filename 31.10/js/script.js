@@ -66,7 +66,6 @@ async function game() {
 	divNation.insertBefore(img, name);
 	correctP.innerHTML = `Poprawne: <strong>${currentGame.correct}</strong>`;
 	incorrectP.innerHTML = `Nie poprawne: <strong>${currentGame.incorrect}</strong>`;
-	console.log(data);
 }
 game();
 ansBtn.addEventListener('click', () => {
@@ -129,7 +128,9 @@ function updateHistory() {
 		details.innerHTML = '<h3>Szczegóły gry:</h3>';
 		game.answers.forEach(answer => {
 			const answerDetail = document.createElement('p');
-			answerDetail.innerHTML = `<img src=${answer.country} class="historyFlag"></img>s ${
+			answerDetail.innerHTML = `<img src=${
+				answer.country
+			} class="historyFlag"></img> ${
 				answer.correct
 					? '<i class="fa-solid fa-check"></i>'
 					: '<i class="fa-solid fa-x"></i>'

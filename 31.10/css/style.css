@@ -15,6 +15,7 @@ body {
 img {
 	width: 400px;
 	height: 240px;
+	border-radius: 5px;
 }
 .randomNation {
 	display: block;
@@ -56,6 +57,7 @@ button {
 	cursor: pointer;
 	background: none;
 	border-radius: 10px;
+	transition: 0.3s all;
 }
 .score {
 	position: absolute;
