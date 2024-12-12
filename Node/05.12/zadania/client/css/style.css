@@ -1,17 +1,32 @@
 * {
 	margin: 0;
-	padding: 0; 
+	padding: 0;
 }
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	height: 100vh;
 	color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
 }
 .zad {
 	display: inline-block;
 	margin: 5px;
 	width: 20%;
-	height: 20%;
+	min-height: 20%;
 	padding: 50px;
 	background-color: #333;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+button {
+	padding: 5px 10px;
+}
+p {
+	margin-top: 5px;
+}
+input {
+	width: 130px;
 }
