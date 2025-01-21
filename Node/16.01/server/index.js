@@ -35,7 +35,7 @@ app.get('/update/:id/:title/:author', (req, res) => {
 	const id = req.params.id;
 	const title = req.params.title;
 	const author = req.params.author;
-	const sql = `Update books set title = ${title}, author = ${author} where id = ${id}`;
+	const sql = `Update books set title = '${title}', author = '${author}' where id = ${id}`;
 	con.query(sql, (err, result, fields) => {
 		res.send('Pomyślnie zmieniono dane');
 	});

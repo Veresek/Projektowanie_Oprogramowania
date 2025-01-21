@@ -23,9 +23,9 @@ async function drawTable() {
 	jsn = await jsn.json();
 	const h1 = document.createElement('h1');
 	h1.innerHTML = 'Książki:';
-	container.appendChild(h1);
+	document.getElementById('books').appendChild(h1);
 	const table = document.createElement('table');
-	container.appendChild(table);
+	document.getElementById('books').appendChild(table);
 	table.innerHTML = `            
         <tr>
             <th>id</th>
@@ -48,35 +48,43 @@ async function drawTable() {
 		tr.appendChild(id);
 		tr.appendChild(title);
 		tr.appendChild(author);
-		tr.append(edit);
-		tr.append(del);
+		tr.appendChild(edit);
+		tr.appendChild(del);
 		del.classList.add('delBtn');
 		edit.classList.add('editBtn');
-		edit.addEventListener('click', () => {
+		edit.addEventListener('click', function () {
 			let id = this.previousSibling.previousSibling.previousSibling;
 			let title = this.previousSibling.previousSibling;
 			let author = this.previousSibling;
-			title.innerHTML = "<input type='text' id='title'>";
-			author.innerHTML = "<input type='text' id='author'>";
+			title.innerHTML = "<input type='text' id='titleEdit'>";
+			author.innerHTML = "<input type='text' id='authorEdit'>";
 			edit.style.display = 'none';
-			const conf = document.createElement('button');
+			let conf = document.createElement('button');
 			conf.innerHTML = 'Zatwierdź';
+			conf.classList.add('editBtn');
 			tr.insertBefore(conf, del);
 			conf.addEventListener('click', async () => {
-				let titleVal = title.value;
-				let authorVal = author.value;
-				const upd = await fetch(
-					`http://localhost:3001/update/${id}/${titleVal}/${authorVal}`
-				);
-				upd = await upd.text();
-				alert(upd);
-				drawTable();
+				let idVal = id.textContent;
+				let titleVal = document.getElementById('titleEdit').value;
+				let authorVal = document.getElementById('authorEdit').value;
+				if (titleVal == '' || authorVal == '') {
+					alert('Nie wprowadzono danych');
+					drawTable();
+				} else {
+					let upd = await fetch(
+						`http://localhost:3001/update/${idVal}/${titleVal}/${authorVal}`
+					);
+					upd = await upd.text();
+					alert(upd);
+					drawTable();
+				}
 			});
 		});
-		del.addEventListener('click', async () => {
+		del.addEventListener('click', async function () {
 			let id =
-				this.previousSibling.previousSibling.previousSibling.previousSibling;
-			const del = await fetch(`http://localhost:3001/del/${id}`);
+				this.previousSibling.previousSibling.previousSibling.previousSibling
+					.textContent;
+			let del = await fetch(`http://localhost:3001/del/${id}`);
 			del = await del.text();
 			alert(del);
 			drawTable();
